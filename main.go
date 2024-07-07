@@ -1,16 +1,13 @@
 package main
 
 import (
+    "fmt"
 	"log"
 	"net/smtp"
 	"os"
+    "time"
 
 	"github.com/joho/godotenv"
-)
-
-var (
-	msg        = []byte("email message 003...")
-	recipients = []string{"tymalik@pm.me"}
 )
 
 func main() {
@@ -22,6 +19,9 @@ func main() {
 	username := os.Getenv("USERNAME")
 	password := os.Getenv("PASSWORD")
 	from := os.Getenv("FROM")
+    today := time.Now().Date()
+    msg        = []byte(fmt.Sprintf("Redeployment for %s:\n- archive_ui\n- archive_resume", today))
+	recipients = []string{"tymalik@pm.me"}
 
 	hostname := os.Getenv("HOSTNAME")
 	auth := smtp.PlainAuth("", username, password, hostname)
